@@ -28,3 +28,24 @@ function wp_gutenberg_carousel_wp_gutenberg_carousel_block_init() {
 	register_block_type( __DIR__ . '/build' );
 }
 add_action( 'init', 'wp_gutenberg_carousel_wp_gutenberg_carousel_block_init' );
+
+
+/**
+ * Load Swiper.js script
+ */
+/* function load_wp_gutenberg_carousel_script() {
+  
+    wp_register_script('wp-gutenberg-carousel', plugin_dir_url(__FILE__) . 'assets/wp-gutenberg-carousel.js', '1.0.0', true);
+    wp_enqueue_script('wp-gutenberg-carousel');
+}
+add_action('wp_enqueue_scripts', 'load_wp_gutenberg_carousel_script'); */
+
+/**
+ * Load Swiper.js styles
+ */
+function load_wp_gutenberg_carousel_styles() {
+    wp_register_style('wp-gutenberg-carousel', plugin_dir_url(__FILE__) . 'assets/wp-gutenberg-carousel.css', array(), '1.0.0');
+    wp_enqueue_style('wp-gutenberg-carousel');
+
+}
+add_action('wp_enqueue_scripts', 'load_wp_gutenberg_carousel_styles');
