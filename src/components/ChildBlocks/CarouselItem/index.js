@@ -1,18 +1,15 @@
 import { registerBlockType } from '@wordpress/blocks';
-
 import './style.scss';
-
-/**
- * Internal dependencies
- */
 import Edit from './edit';
 import save from './save';
-import metadata from './block.json';
 
-
-registerBlockType( metadata.name, {
-
+registerBlockType( 'wp-gutenberg/carousel-item', {
+	title: 'Carousel Item',
+	icon: 'admin-comments',
+	category: 'text',
+	parent: ['wp-gutenberg/carousel'],
+	description: "Example block scaffolded with Create Block tool.",
+	example: {},
 	edit: Edit,
-
 	save,
 } );

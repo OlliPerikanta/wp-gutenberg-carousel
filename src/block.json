@@ -4,7 +4,7 @@
 	"name": "wp-gutenberg/carousel",
 	"version": "0.1.0",
 	"title": "WP Gutenberg Carousel",
-	"category": "widgets",
+	"category": "text",
 	"icon": "slides",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
