@@ -11,8 +11,8 @@ import './editor.scss';
 export default function Edit() {
 	const allowedBlocksList = ['wp-gutenberg/carousel-item'];
 	return (
-		<button { ...useBlockProps() }>
-			<InnerBlocks renderAppender={InnerBlocks.ButtonBlockAppender}  />
-		</button>
+		<div{ ...useBlockProps() }>
+			<InnerBlocks renderAppender={InnerBlocks.ButtonBlockAppender} allowedBlocks={[allowedBlocksList]} />
+		</div>
 	);
 }

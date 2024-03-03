@@ -1,16 +1,69 @@
+// Import necessary functions and components from WordPress packages
 import { __ } from '@wordpress/i18n';
+import { SelectControl } from '@wordpress/components';
+import { useSelect } from '@wordpress/data';
+import { 
+	useBlockProps,
+	InspectorControls,
+} from '@wordpress/block-editor';
 
-import { useBlockProps } from '@wordpress/block-editor';
-
+// Import custom styles
 import './editor.scss';
 
-export default function Edit() {
+// Define a component for selecting an article from a list
+const ArticleSelector = ({ value, onChange, articles }) => {
+	// Map articles data to options format required by SelectControl
+	const options = articles.map((article) => ({
+	  label: article.title.rendered,
+	  value: article.id,
+	}));
+  
+	// Return InspectorControls component containing SelectControl
 	return (
-		<p { ...useBlockProps() }>
-			{ __(
-				'Wp Gutenberg Carousel – hello from the editor!',
-				'wp-gutenberg-carousel'
-			) }
-		</p>
+	  <InspectorControls>
+		<SelectControl
+		  label="Valitse artikkeli"
+		  value={value}
+		  options={options}
+		  onChange={onChange}
+		/>
+	  </InspectorControls>
+	);
+};
+
+// Define the main Edit function for the block
+export default function Edit({ attributes, setAttributes }) {
+	// Destructure articleId from attributes
+	const { articleId } = attributes;
+
+	// Fetch articles data using useSelect hook
+	const articles = useSelect((select) => {
+	  return select('core').getEntityRecords('postType', 'recommenders', {
+		per_page: -1,
+	  });
+	}, []);
+  
+	// Define function to handle article selection change
+	const onChangeArticle = (newArticleId) => {
+	  setAttributes({ articleId: newArticleId });
+	};
+
+	// Set default value for articles variable if it's null or undefined
+	const articlesToDisplay = articles || [];
+
+	// Check if articleId and articles data are loaded before performing find operation
+	const selectedArticle = articlesToDisplay.find(article => article.id === parseInt(articleId));
+	const articleTitle = selectedArticle ? selectedArticle.title.rendered : 'N/A';
+
+	// Return block's Edit component
+	return (
+		<div { ...useBlockProps() } style={{height: '50px', width: '100%'}}>
+			<ArticleSelector
+				value={articleId}
+				onChange={onChangeArticle}
+				articles={articlesToDisplay}
+			/>
+			<p>Valittu artikkeli: {articleTitle}</p>
+		</div>
 	);
 }

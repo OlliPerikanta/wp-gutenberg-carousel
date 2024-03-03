@@ -10,6 +10,12 @@ registerBlockType( 'wp-gutenberg/carousel-item', {
 	parent: ['wp-gutenberg/carousel'],
 	description: "Example block scaffolded with Create Block tool.",
 	example: {},
+	attributes: {
+		articleId: {
+		  type: 'string',
+		  default: '',
+		},
+	  },
 	edit: Edit,
 	save,
 } );
