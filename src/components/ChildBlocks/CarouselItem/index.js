@@ -15,6 +15,10 @@ registerBlockType( 'wp-gutenberg/carousel-item', {
 		  type: 'string',
 		  default: '',
 		},
+		testTitle: {
+			type: 'string',
+			default: '',
+		  },
 	  },
 	edit: Edit,
 	save,

@@ -1,10 +1,11 @@
 import { useBlockProps } from '@wordpress/block-editor';
 
 
-export default function save() {
+export default function save({ attributes, setAttributes }) {
+	console.log(attributes.testTitle);
 	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Wp Gutenberg Carousel – hello from the saved content!' }
-		</p>
+		<div { ...useBlockProps.save() }>
+			<p>{attributes.testTitle}</p>
+		</div>
 	);
 }
