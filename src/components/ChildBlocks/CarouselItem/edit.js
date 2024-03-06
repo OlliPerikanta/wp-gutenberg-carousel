@@ -37,7 +37,7 @@ export default function Edit({ attributes, setAttributes }) {
 	// Destructure articleId from attributes
 	const { articleId } = attributes;
 
-	const [testTitle, setTestTitle] = useState(attributes.testTitle || 'N/A');
+	const [testemonialTitle, setPostTitle] = useState(attributes.testemonialTitle || '');
 
 	// Fetch articles data using useSelect hook
 	const articles = useSelect((select) => {
@@ -45,20 +45,15 @@ export default function Edit({ attributes, setAttributes }) {
 		per_page: -1,
 	  });
 	}, []);
-  
-/* 	// Define function to handle article selection change
-	const onChangeArticle = (newArticleId) => {
-	  setAttributes({ articleId: newArticleId });
-	}; */
 
 	const onChangeArticle = (newArticleId) => {
 		const selectedArticle = articles.find(article => article.id === parseInt(newArticleId));
-		const newTitle = selectedArticle ? selectedArticle.title.rendered : 'N/A';
+		const newTitle = selectedArticle ? selectedArticle.title.rendered : '';
 		setAttributes({ 
 		  articleId: newArticleId,
-		  testTitle: newTitle 
+		  testemonialTitle: newTitle 
 		});
-		setTestTitle(newTitle);
+		setPostTitle(newTitle);
 	  };
 
 	// Set default value for articles variable if it's null or undefined
@@ -66,8 +61,8 @@ export default function Edit({ attributes, setAttributes }) {
 
 	// Check if articleId and articles data are loaded before performing find operation
 	const selectedArticle = articlesToDisplay.find(article => article.id === parseInt(articleId));
-	const articleTitle = selectedArticle ? selectedArticle.title.rendered : 'N/A';
-	  console.log(attributes.testTitle);
+	const articleTitle = selectedArticle ? selectedArticle.title.rendered : '';
+	
 	// Return block's Edit component
 	return (
 		<div { ...useBlockProps() } style={{height: '50px', width: '100%'}}>

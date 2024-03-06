@@ -15,7 +15,7 @@ registerBlockType( 'wp-gutenberg/carousel-item', {
 		  type: 'string',
 		  default: '',
 		},
-		testTitle: {
+		testemonialTitle: {
 			type: 'string',
 			default: '',
 		  },

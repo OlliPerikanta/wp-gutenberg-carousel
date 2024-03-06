@@ -70,7 +70,7 @@ function Edit({
   const {
     articleId
   } = attributes;
-  const [testTitle, setTestTitle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(attributes.testTitle || 'N/A');
+  const [testemonialTitle, setPostTitle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(attributes.testemonialTitle || '');
 
   // Fetch articles data using useSelect hook
   const articles = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
@@ -78,20 +78,14 @@ function Edit({
       per_page: -1
     });
   }, []);
-
-  /* 	// Define function to handle article selection change
-  	const onChangeArticle = (newArticleId) => {
-  	  setAttributes({ articleId: newArticleId });
-  	}; */
-
   const onChangeArticle = newArticleId => {
     const selectedArticle = articles.find(article => article.id === parseInt(newArticleId));
-    const newTitle = selectedArticle ? selectedArticle.title.rendered : 'N/A';
+    const newTitle = selectedArticle ? selectedArticle.title.rendered : '';
     setAttributes({
       articleId: newArticleId,
-      testTitle: newTitle
+      testemonialTitle: newTitle
     });
-    setTestTitle(newTitle);
+    setPostTitle(newTitle);
   };
 
   // Set default value for articles variable if it's null or undefined
@@ -99,8 +93,8 @@ function Edit({
 
   // Check if articleId and articles data are loaded before performing find operation
   const selectedArticle = articlesToDisplay.find(article => article.id === parseInt(articleId));
-  const articleTitle = selectedArticle ? selectedArticle.title.rendered : 'N/A';
-  console.log(attributes.testTitle);
+  const articleTitle = selectedArticle ? selectedArticle.title.rendered : '';
+
   // Return block's Edit component
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)(),
@@ -145,7 +139,7 @@ __webpack_require__.r(__webpack_exports__);
       type: 'string',
       default: ''
     },
-    testTitle: {
+    testemonialTitle: {
       type: 'string',
       default: ''
     }
@@ -173,13 +167,14 @@ __webpack_require__.r(__webpack_exports__);
 
 
 function save({
-  attributes,
-  setAttributes
+  attributes
 }) {
-  console.log(attributes.testTitle);
+  const {
+    testemonialTitle
+  } = attributes;
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, attributes.testTitle));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, testemonialTitle));
 }
 
 /***/ }),

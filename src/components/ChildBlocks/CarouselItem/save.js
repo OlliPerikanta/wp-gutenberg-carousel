@@ -1,11 +1,10 @@
 import { useBlockProps } from '@wordpress/block-editor';
 
-
-export default function save({ attributes, setAttributes }) {
-	console.log(attributes.testTitle);
+export default function save({ attributes }) {
+	const { testemonialTitle } = attributes;
 	return (
 		<div { ...useBlockProps.save() }>
-			<p>{attributes.testTitle}</p>
+			<p>{testemonialTitle}</p>
 		</div>
 	);
 }
