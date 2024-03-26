@@ -2,10 +2,10 @@
 /******/ 	"use strict";
 /******/ 	var __webpack_modules__ = ({
 
-/***/ "./src/components/ChildBlocks/CarouselItem/edit.js":
-/*!*********************************************************!*\
-  !*** ./src/components/ChildBlocks/CarouselItem/edit.js ***!
-  \*********************************************************/
+/***/ "./src/components/ChildBlocks/DynamicFeedback/edit.js":
+/*!************************************************************!*\
+  !*** ./src/components/ChildBlocks/DynamicFeedback/edit.js ***!
+  \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -24,122 +24,113 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_data__WEBPACK_IMPORTED_MODULE_4___default = /*#__PURE__*/__webpack_require__.n(_wordpress_data__WEBPACK_IMPORTED_MODULE_4__);
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
 /* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__);
-/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/components/ChildBlocks/CarouselItem/editor.scss");
-
-// Import necessary functions and components from WordPress packages
+/* harmony import */ var _editor_scss__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./editor.scss */ "./src/components/ChildBlocks/DynamicFeedback/editor.scss");
 
 
 
 
 
 
-// Import custom styles
 
 
-// Define a component for selecting an article from a list
+// Component for selecting an article
 const ArticleSelector = ({
   value,
   onChange,
   articles
 }) => {
-  // Map articles data to options format required by SelectControl
+  // Convert article data to the format required by SelectControl
   const options = [{
-    label: 'Select Testemonial',
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select article'),
     value: '',
     disabled: true
   }, ...articles.map(article => ({
     label: article.title.rendered,
     value: article.id
   }))];
-
-  // Return InspectorControls component containing SelectControl
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.InspectorControls, null, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_components__WEBPACK_IMPORTED_MODULE_3__.SelectControl, {
-    label: "Valitse artikkeli",
+    label: (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Select article'),
     value: value,
     options: options,
     onChange: onChange
   }));
 };
 
-// Define the main Edit function for the block
+// Main editing component
 function Edit({
   attributes,
   setAttributes
 }) {
-  // Destructure articleId from attributes
+  // Destructure attributes
   const {
     articleId
   } = attributes;
-  const [testemonialTitle, setPostTitle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(attributes.testemonialTitle || '');
+  const [selectedArticle, setSelectedArticle] = (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useState)(null);
 
   // Fetch articles data using useSelect hook
   const articles = (0,_wordpress_data__WEBPACK_IMPORTED_MODULE_4__.useSelect)(select => {
-    return select('core').getEntityRecords('postType', 'recommenders', {
+    return select('core').getEntityRecords('postType', 'feedbacks', {
       per_page: -1
     });
   }, []);
+
+  // Handle article selection
   const onChangeArticle = newArticleId => {
-    const selectedArticle = articles.find(article => article.id === parseInt(newArticleId));
-    const newTitle = selectedArticle ? selectedArticle.title.rendered : '';
+    const selected = articles.find(article => article.id === parseInt(newArticleId));
+    setSelectedArticle(selected);
     setAttributes({
-      articleId: newArticleId,
-      testemonialTitle: newTitle
+      articleId: newArticleId
     });
-    setPostTitle(newTitle);
   };
 
-  // Set default value for articles variable if it's null or undefined
-  const articlesToDisplay = articles || [];
+  // Effect to handle changes when articleId or articles change
+  (0,_wordpress_element__WEBPACK_IMPORTED_MODULE_2__.useEffect)(() => {
+    if (!articleId || !articles) return;
+    const selected = articles.find(article => article.id === parseInt(articleId));
+    setSelectedArticle(selected);
+  }, [articleId, articles]);
 
-  // Check if articleId and articles data are loaded before performing find operation
-  const selectedArticle = articlesToDisplay.find(article => article.id === parseInt(articleId));
+  // Get title and content of selected article
   const articleTitle = selectedArticle ? selectedArticle.title.rendered : '';
+  const articleContent = selectedArticle ? selectedArticle.acf.feedback_text : '';
 
-  // Return block's Edit component
+  // Return the edit component
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)(),
-    style: {
-      height: '50px',
-      width: '100%'
-    }
+    ...(0,_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_5__.useBlockProps)()
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(ArticleSelector, {
     value: articleId,
     onChange: onChangeArticle,
-    articles: articlesToDisplay
-  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, "Valittu artikkeli: ", articleTitle));
+    articles: articles || []
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, (0,_wordpress_i18n__WEBPACK_IMPORTED_MODULE_1__.__)('Selected article'), ": ", articleTitle), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, articleContent));
 }
 
 /***/ }),
 
-/***/ "./src/components/ChildBlocks/CarouselItem/index.js":
-/*!**********************************************************!*\
-  !*** ./src/components/ChildBlocks/CarouselItem/index.js ***!
-  \**********************************************************/
+/***/ "./src/components/ChildBlocks/DynamicFeedback/index.js":
+/*!*************************************************************!*\
+  !*** ./src/components/ChildBlocks/DynamicFeedback/index.js ***!
+  \*************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/components/ChildBlocks/CarouselItem/style.scss");
-/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/components/ChildBlocks/CarouselItem/edit.js");
-/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/components/ChildBlocks/CarouselItem/save.js");
+/* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./style.scss */ "./src/components/ChildBlocks/DynamicFeedback/style.scss");
+/* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./edit */ "./src/components/ChildBlocks/DynamicFeedback/edit.js");
+/* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./save */ "./src/components/ChildBlocks/DynamicFeedback/save.js");
 
 
 
 
-(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('wp-gutenberg/carousel-item', {
+(0,_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__.registerBlockType)('wp-gutenberg/carousel-dynamic-feeback', {
   title: 'Carousel Item',
   icon: 'admin-comments',
   category: 'text',
   parent: ['wp-gutenberg/carousel'],
-  description: "Example block scaffolded with Create Block tool.",
+  description: "",
   example: {},
   attributes: {
     articleId: {
-      type: 'string',
-      default: ''
-    },
-    testemonialTitle: {
       type: 'string',
       default: ''
     }
@@ -150,31 +141,18 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/components/ChildBlocks/CarouselItem/save.js":
-/*!*********************************************************!*\
-  !*** ./src/components/ChildBlocks/CarouselItem/save.js ***!
-  \*********************************************************/
+/***/ "./src/components/ChildBlocks/DynamicFeedback/save.js":
+/*!************************************************************!*\
+  !*** ./src/components/ChildBlocks/DynamicFeedback/save.js ***!
+  \************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
 /* harmony export */ __webpack_require__.d(__webpack_exports__, {
 /* harmony export */   "default": () => (/* binding */ save)
 /* harmony export */ });
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
-/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! @wordpress/block-editor */ "@wordpress/block-editor");
-/* harmony import */ var _wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1___default = /*#__PURE__*/__webpack_require__.n(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__);
-
-
-function save({
-  attributes
-}) {
-  const {
-    testemonialTitle
-  } = attributes;
-  return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("p", null, testemonialTitle));
+function save() {
+  return null;
 }
 
 /***/ }),
@@ -221,7 +199,7 @@ function Edit() {
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @wordpress/blocks */ "@wordpress/blocks");
 /* harmony import */ var _wordpress_blocks__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_wordpress_blocks__WEBPACK_IMPORTED_MODULE_0__);
-/* harmony import */ var _components_ChildBlocks_CarouselItem__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ChildBlocks/CarouselItem */ "./src/components/ChildBlocks/CarouselItem/index.js");
+/* harmony import */ var _components_ChildBlocks_DynamicFeedback__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./components/ChildBlocks/DynamicFeedback */ "./src/components/ChildBlocks/DynamicFeedback/index.js");
 /* harmony import */ var _style_scss__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./style.scss */ "./src/style.scss");
 /* harmony import */ var _edit__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./edit */ "./src/edit.js");
 /* harmony import */ var _save__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./save */ "./src/save.js");
@@ -257,16 +235,23 @@ __webpack_require__.r(__webpack_exports__);
 
 function save() {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
-    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save()
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null));
+    ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(),
+    className: "swiper-container"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    className: "swiper-wrapper"
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    class: "swiper-plugin-navigation-prevEl"
+  }, "PREV"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
+    class: "swiper-plugin-navigation-nextEl"
+  }, "NEXT"));
 }
 
 /***/ }),
 
-/***/ "./src/components/ChildBlocks/CarouselItem/editor.scss":
-/*!*************************************************************!*\
-  !*** ./src/components/ChildBlocks/CarouselItem/editor.scss ***!
-  \*************************************************************/
+/***/ "./src/components/ChildBlocks/DynamicFeedback/editor.scss":
+/*!****************************************************************!*\
+  !*** ./src/components/ChildBlocks/DynamicFeedback/editor.scss ***!
+  \****************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
@@ -275,10 +260,10 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/components/ChildBlocks/CarouselItem/style.scss":
-/*!************************************************************!*\
-  !*** ./src/components/ChildBlocks/CarouselItem/style.scss ***!
-  \************************************************************/
+/***/ "./src/components/ChildBlocks/DynamicFeedback/style.scss":
+/*!***************************************************************!*\
+  !*** ./src/components/ChildBlocks/DynamicFeedback/style.scss ***!
+  \***************************************************************/
 /***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
 
 __webpack_require__.r(__webpack_exports__);
