@@ -79,14 +79,14 @@ __webpack_require__.r(__webpack_exports__);
 function save() {
   return (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     ..._wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.useBlockProps.save(),
-    className: "swiper-container"
+    className: "swiper swiper-container"
   }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
     className: "swiper-wrapper"
-  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    class: "swiper-plugin-navigation-prevEl"
-  }, "PREV"), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("button", {
-    class: "swiper-plugin-navigation-nextEl"
-  }, "NEXT"));
+  }, (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)(_wordpress_block_editor__WEBPACK_IMPORTED_MODULE_1__.InnerBlocks.Content, null)), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "swiper-button-prev"
+  }), (0,react__WEBPACK_IMPORTED_MODULE_0__.createElement)("div", {
+    class: "swiper-button-next"
+  }));
 }
 
 /***/ }),

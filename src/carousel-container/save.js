@@ -5,17 +5,13 @@ import {
 
 export default function save() {
 	return (
-		<div { ...useBlockProps.save() } className="swiper-container">
+		<div { ...useBlockProps.save() } className="swiper swiper-container">
    
     	<div className="swiper-wrapper">
 			<InnerBlocks.Content />
 		</div>
-		<button class="swiper-plugin-navigation-prevEl">
-      PREV
-    </button>
-    <button class="swiper-plugin-navigation-nextEl">
-      NEXT
-    </button>
+		<div class="swiper-button-prev"></div>
+    	<div class="swiper-button-next"></div>
 		</div>
 	);
 }
