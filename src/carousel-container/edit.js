@@ -1,5 +1,6 @@
 import { __ } from '@wordpress/i18n';
 
+
 import { 
 	useBlockProps,
 	InnerBlocks,
@@ -9,7 +10,7 @@ import {
 import './editor.scss';
 
 export default function Edit() {
-	const allowedBlocksList = ['wp-gutenberg/carousel-item'];
+	const allowedBlocksList = ['wp-gutenberg/carousel-item-dynamic-feeback'];
 	return (
 		<div{ ...useBlockProps() }>
 			<InnerBlocks renderAppender={InnerBlocks.ButtonBlockAppender} allowedBlocks={[allowedBlocksList]} />

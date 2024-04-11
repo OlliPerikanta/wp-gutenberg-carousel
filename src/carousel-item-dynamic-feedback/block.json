@@ -1,17 +1,16 @@
 {
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
-	"name": "wp-gutenberg/carousel",
+	"name": "wp-gutenberg/carousel-item-dynamic-feeback",
 	"version": "0.1.0",
-	"title": "WP Gutenberg Carousel",
+	"title": "Carousel Item - Dynamic Feedback",
 	"category": "text",
-	"icon": "slides",
 	"description": "Example block scaffolded with Create Block tool.",
 	"example": {},
 	"supports": {
 		"html": false
 	},
-	"textdomain": "wp-gutenberg-carousel",
+	"textdomain": "wp-gutenberg-carousel-item-dynamic-feeback",
 	"editorScript": "file:./index.js",
 	"editorStyle": "file:./index.css",
 	"style": "file:./style-index.css",
